@@ -1,5 +1,6 @@
 {
     "board": "arduino:avr:uno",
-    "programmer": "AVR ISP",
-    "sketch": "Ariadne.ino"
+    "programmer": "AVRISP mkII",
+    "sketch": "Ariadne.ino",
+    "port": "COM3"
 }
