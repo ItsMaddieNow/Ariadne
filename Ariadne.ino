@@ -18,12 +18,10 @@ const int RightSensorPin = 0;
 const int CenterSensorPin = 0;
 const int LeftSensorPin = 0;
 // Buttons
-const int RightButtonPin = 0;
-const int ButtonState;
+const int ButtonPin = 0;
 // LED Pins
-const int RightLEDPin = 0;
+const int ButtonLEDPin = 0;
 const int StartLEDPin = 13;
-const int LeftLEDPin = 0;   
 
 void setup() {
   // put your setup code here, to run once:
@@ -31,26 +29,46 @@ void setup() {
   UltraSonicServo.attach(ServoPin);
   UltraSonicServo.write(90);
 
+  // Led Setup
   pinMode(StartLEDPin, OUTPUT);
-  
+  pinMode(ButtonLEDPin, OUTPUT);
+
+  //Button Setup
+  pinMode(ButtonPin, INPUT);
+
+
   BlinkStartLed();
   
-  digitalWrite(5, HIGH);
-  digitalWrite(10, HIGH);
+  digitalWrite(RightMotorForwardPin, HIGH);
+  digitalWrite(LeftMotorForwardPin, HIGH);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  // Pathfinding Modes
+  if (ModeButtonRead() == HIGH){
+
+  }else
+  {
+    
+  }
+  
 }
 
-void BlinkStartLed() {
+void BlinkStartLed(int Length) {
+  for(int i = 0; i<=Length; i++){
+    digitalWrite(StartLEDPin, HIGH);
+    delay(500);
+    digitalWrite(StartLEDPin, LOW);
+    delay(500);
+  }
   digitalWrite(StartLEDPin, HIGH);
-  delay(500);
-  digitalWrite(StartLEDPin, LOW);
-  delay(500);
-  digitalWrite(StartLEDPin, HIGH);
-  delay(500);
-  digitalWrite(StartLEDPin, LOW);
-  delay(500);
-  digitalWrite(StartLEDPin, HIGH);
+}
+
+int ModeButtonRead() {
+  // Sets the LED State based on whether the button is down
+  int ModeButtonState = digitalRead(ButtonPin); 
+  digitalWrite(ButtonLEDPin,ModeButtonState);
+  // Returns the button state
+  return ModeButtonState;
 }
