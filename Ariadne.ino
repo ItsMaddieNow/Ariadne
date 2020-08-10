@@ -35,9 +35,8 @@ void setup() {
 
   //Button Setup
   pinMode(ButtonPin, INPUT);
-
-
-  BlinkStartLed();
+  // Blinks LEDs indicating startup
+  BlinkStartLed(3);
   
   digitalWrite(RightMotorForwardPin, HIGH);
   digitalWrite(LeftMotorForwardPin, HIGH);
