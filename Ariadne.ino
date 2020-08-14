@@ -1,6 +1,8 @@
 //Libraries
 
 #include <Servo.h>
+#include <iostream>
+#include <tuple>
 
 // Motor Pins
 const int RightMotorForwardPin = 5;
@@ -14,9 +16,9 @@ Servo UltraSonicServo;
 const int UltraSonicPinTrig = 0;
 const int UltraSonicPinEcho = 0;
 // Line Following Sensor
-const int RightSensorPin = 0;
-const int CenterSensorPin = 0;
 const int LeftSensorPin = 0;
+const int CenterSensorPin = 0;
+const int RightSensorPin = 0;
 // Buttons
 const int ButtonPin = 0;
 // LED Pins
@@ -33,6 +35,11 @@ void setup() {
   pinMode(StartLEDPin, OUTPUT);
   pinMode(ButtonLEDPin, OUTPUT);
 
+  // Line Following Sensor Setup
+  pinMode(LeftSensorPin,INPUT);
+  pinMode(CenterSensorPin,INPUT);
+  pinMode(RightSensorPin,INPUT);
+
   //Button Setup
   pinMode(ButtonPin, INPUT);
   // Blinks LEDs indicating startup
@@ -45,11 +52,12 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   // Pathfinding Modes
-  if (ModeButtonRead() == HIGH){
+  if (ModeButtonRead() == HIGH) {
+    // Wall Avoiding Mode
 
-  }else
-  {
-    
+  } else {
+    // Line Following
+
   }
   
 }
@@ -71,3 +79,5 @@ int ModeButtonRead() {
   // Returns the button state
   return ModeButtonState;
 }
+
+
