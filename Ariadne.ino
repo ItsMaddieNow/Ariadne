@@ -1,8 +1,5 @@
 //Libraries
-
 #include <Servo.h>
-#include <iostream>
-#include <tuple>
 
 // Motor Pins
 const int RightMotorForwardPin = 5;
@@ -10,22 +7,24 @@ const int RightMotorBackwardPin = 6;
 const int LeftMotorForwardPin = 10;
 const int LeftMotorBackwardPin = 9;
 // Servo Pins
-const int ServoPin = 12;
+const int ServoPin = 11;
 Servo UltraSonicServo;
 // Ultra Sonic Sensor
-const int UltraSonicPinTrig = 0;
-const int UltraSonicPinEcho = 0;
+const int UltraSonicPinTrig = 12;
+const int UltraSonicPinEcho = 13;
 // Line Following Sensor
-const int LeftSensorPin = 0;
-const int CenterSensorPin = 0;
-const int RightSensorPin = 0;
+const int LeftSensorPin = A0;
+const int CenterSensorPin = A1;
+const int RightSensorPin = A2;
 // Buttons
 const int ButtonPin = 0;
 // LED Pins
-const int ButtonLEDPin = 0;
-const int StartLEDPin = 13;
+const int ButtonLEDPin = 1;
+const int StartLEDPin = 2;
 
 void setup() {
+  Serial.begin(9600);
+
   // put your setup code here, to run once:
   // Servo Setup
   UltraSonicServo.attach(ServoPin);
@@ -36,29 +35,32 @@ void setup() {
   pinMode(ButtonLEDPin, OUTPUT);
 
   // Line Following Sensor Setup
-  pinMode(LeftSensorPin,INPUT);
-  pinMode(CenterSensorPin,INPUT);
-  pinMode(RightSensorPin,INPUT);
+  pinMode(LeftSensorPin, INPUT);
+  pinMode(CenterSensorPin, INPUT);
+  pinMode(RightSensorPin, INPUT);
 
   //Button Setup
   pinMode(ButtonPin, INPUT);
   // Blinks LEDs indicating startup
   BlinkStartLed(3);
+  //if (!Serial.avaliable){
+    digitalWrite(RightMotorForwardPin, HIGH);
+    digitalWrite(LeftMotorForwardPin, HIGH);
+  //}
   
-  digitalWrite(RightMotorForwardPin, HIGH);
-  digitalWrite(LeftMotorForwardPin, HIGH);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   // Pathfinding Modes
-  if (ModeButtonRead() == HIGH) {
+  Serial.println((digitalRead(ButtonPin) == HIGH)? "High":"Low");
+  /*if (ModeButtonRead() == HIGH) {
     // Wall Avoiding Mode
 
   } else {
     // Line Following
 
-  }
+  }*/
   
 }
 
@@ -76,6 +78,7 @@ int ModeButtonRead() {
   // Sets the LED State based on whether the button is down
   int ModeButtonState = digitalRead(ButtonPin); 
   digitalWrite(ButtonLEDPin,ModeButtonState);
+
   // Returns the button state
   return ModeButtonState;
 }
