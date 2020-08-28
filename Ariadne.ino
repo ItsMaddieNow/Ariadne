@@ -53,7 +53,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   // Pathfinding Modes
-  Serial.println((digitalRead(ButtonPin) == HIGH)? "High":"Low");
+  Serial.println((ModeButtonRead() == HIGH)? "High":"Low");
   /*if (ModeButtonRead() == HIGH) {
     // Wall Avoiding Mode
 
