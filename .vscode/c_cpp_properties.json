@@ -1,20 +1,42 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Linux",
             "includePath": [
                 "C:\\Program Files (x86)\\Arduino\\libraries\\Servo\\src",
                 "C:\\Program Files (x86)\\Arduino\\tools\\**",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
-                "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\avr\\**"
+                "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\avr\\**",
+                "/home/maddy/Downloads/arduino-1.8.6/hardware/arduino/avr/**",
+                "/home/maddy/Downloads/arduino-1.8.6/tools/**",
+                "/home/maddy/Applications/arduino-1.8.13/hardware/arduino/avr/**",
+                "/home/maddy/Applications/arduino-1.8.13/tools/**"
             ],
             "forcedInclude": [
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h",
+                "/home/maddy/Downloads/arduino-1.8.6/hardware/arduino/avr/cores/arduino/Arduino.h",
+                "/home/maddy/Applications/arduino-1.8.13/hardware/arduino/avr/cores/arduino/Arduino.h"
             ],
             "intelliSenseMode": "msvc-x64",
             "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.26.28801/bin/Hostx64/x64/cl.exe",
             "cStandard": "c11",
             "cppStandard": "c++17"
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/maddy/Downloads/arduino-1.8.6/tools/**",
+                "/home/maddy/Downloads/arduino-1.8.6/hardware/arduino/avr/**",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu18",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "gcc-x64",
+            "forcedInclude": [
+                "/home/maddy/Downloads/arduino-1.8.6/hardware/arduino/avr/cores/arduino/Arduino.h"
+            ]
         }
     ],
     "version": 4
