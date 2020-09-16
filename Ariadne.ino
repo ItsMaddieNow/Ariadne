@@ -22,18 +22,16 @@ const int ButtonPin = A5;
 // LED Pins
 const int ButtonLEDPin = 1;
 const int StartLEDPin = 2;
-// Ultrasonic variables
-long duration;
-int distance;
 
 void setup() {
   Serial.begin(9600);
-
-  // put your setup code here, to run once:
   // Servo Setup
   UltraSonicServo.attach(ServoPin);
   UltraSonicServo.write(90);
-
+  // Ultrasonic Sensor Setup
+  pinMode(UltraSonicPinEcho, INPUT);
+  pinMode(UltraSonicPinTrig, OUTPUT);
+  
   // Led Setup
   pinMode(StartLEDPin, OUTPUT);
   pinMode(ButtonLEDPin, OUTPUT);
@@ -100,7 +98,8 @@ bool ModeButtonRead() {
   return ModeButtonState;
 }
 
-int UltrasonicRead(int ServoAngle){
+double UltrasonicRead(int ServoAngle){
+  long duration,distance;
   UltraSonicServo.write(ServoAngle);
 
   // Clears the trigPin
@@ -117,17 +116,31 @@ int UltrasonicRead(int ServoAngle){
   
   // Calculating the distance
   distance = duration*0.034/2;
+
+  Serial.print("Angle: ");
+  Serial.print(ServoAngle);
+  Serial.print(", Distance: ");
+  Serial.println(distance);
   //The duration is divided by 2 because the pulse travels to from the sensor to the surface back to the sensor meaning it travels twice the distance between the sensor and the surface and is multiplied by 0.034 because the speed of sound is 0.034 cm/μs and using the formula d=v*t
   return distance;
 }
 // Method that decides which direction to turn 
 int GetTurnDirection(){
+  int DirectionToHead = 0;
+  int LargestResult = 0;
   for(int ServoAngle = 0; ServoAngle<=180; ServoAngle+=45){
     //AngleString = String(Angle);
     Serial.println(String(ServoAngle));
-    UltrasonicRead(ServoAngle);
-    delay(1000);
+    int SensorResult = UltrasonicRead(ServoAngle);
+    bool CurrentIsLargerThanPrevious = SensorResult > LargestResult;
+    LargestResult = CurrentIsLargerThanPrevious ? SensorResult : LargestResult;
+    DirectionToHead = CurrentIsLargerThanPrevious ? ServoAngle : DirectionToHead;
+    delay(250);
   }
-  //TODO: Return Result
-  return 1;
+  Serial.print("Final DirectionToHead: ");
+  Serial.print(DirectionToHead);
+  Serial.print(", Final DirectionToHead Distance: ");
+  Serial.println(LargestResult);
+  
+  return DirectionToHead;
 }
