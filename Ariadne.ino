@@ -43,11 +43,8 @@ void setup() {
 
   // Blinks LEDs indicating startup
   BlinkStartLed(3);
-  //if (!Serial.avaliable){
-    digitalWrite(RightMotorForwardPin, HIGH);
-    digitalWrite(LeftMotorForwardPin, HIGH);
-  //}
-  
+  digitalWrite(RightMotorForwardPin, HIGH);
+  digitalWrite(LeftMotorForwardPin, HIGH);
 }
 
 void loop() {
@@ -56,26 +53,28 @@ void loop() {
   Serial.println((ModeButtonRead())? "High":"Low");
   if (ModeButtonRead() == HIGH) {
     // Wall Avoiding Mode
-    int TurnAngle = GetTurnDirection();
-    
-    //Serial.println(UltrasonicRead(90));
-    //Serial.println(UltrasonicRead(0));
-    //Serial.println(UltrasonicRead(180));
+    switch (GetTurnDirection())
+    {
+    case 0:
+      // turn to 0 Degrees
+      break;
+    case 45:
+      // turn to 45 Degrees
+      break;
+    case :
+      // turn 135 to Degrees
+      break;
+    case 180:
+      // turn 180 to Degrees
+      break;
+    default:
+      // probably 90 Degrees
+      break;
+    }
+
   } else {
-    // Line Foellowing
-    /*if (digitalRead(LeftSensorPin) == HIGH){
-      digitalWrite(LeftMotorForwardPin, HIGH);
-      digitalWrite (RightMotorForwardPin, LOW);
-    }
-  
-    if (digitalRead(CenterSensorPin) == HIGH){
-      digitalWrite (LeftMotorForwardPin, HIGH);
-      digitalWrite (RightMotorForwardPin, HIGH);
-    }
-    if (digitalRead(RightSensorPin) == HIGH){
-      digitalWrite (LeftMotorForwardPin, LOW);
-      digitalWrite (RightMotorForwardPin, HIGH);
-    }*/
+    // Line Following
+
   }
 }
 
