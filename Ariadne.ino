@@ -24,7 +24,7 @@ const int ButtonLEDPin = 1;
 const int StartLEDPin = 2;
 // Line Following Settings
 // TODO : Reassign Time to turn
-const int TimeToTurn = 100;
+const int TimeToTurn = 215;
 // Random Mode
 int RandomCycles = 0;
 
@@ -147,7 +147,7 @@ bool ModeButtonRead() {
   return ModeButtonState;
 }
 
-double UltrasonicRead(int ServoAngle){
+double UltrasonicRead(int ServoAngle){ 
   long duration,distance;
   UltraSonicServo.write(ServoAngle);
 
