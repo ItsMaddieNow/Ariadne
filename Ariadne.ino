@@ -56,24 +56,51 @@ void loop() {
     switch (GetTurnDirection())
     {
     case 0:
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, LOW);
+      delay(430);
+      digitalWrite(LeftMotorForwardPin, HIGH);
+      digitalWrite(RightMotorForwardPin, HIGH);
       // turn to 0 Degrees
       break;
     case 45:
       // turn to 45 Degrees
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, LOW);
+      delay(215);
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, HIGH);
       break;
-    case :
+    case 135:
       // turn 135 to Degrees
+      
+      digitalWrite(RightMotorForwardPin, LOW);
+      digitalWrite(LeftMotorForwardPin, HIGH);
+      delay(215);
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, HIGH);
       break;
     case 180:
       // turn 180 to Degrees
+      digitalWrite(RightMotorForwardPin, LOW);
+      digitalWrite(LeftMotorForwardPin, HIGH);
+      delay(430);
+      digitalWrite(LeftMotorForwardPin, HIGH);
+      digitalWrite(RightMotorForwardPin, HIGH);
+      break;
+    case 90:
+     
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, HIGH);
+      // probably 90 Degrees
       break;
     default:
-      // probably 90 Degrees
+      exit(1);
       break;
     }
 
   } else {
-    // Line Following
+    // Line Following 
 
   }
 }
@@ -125,6 +152,10 @@ double UltrasonicRead(int ServoAngle){
 }
 // Method that decides which direction to turn 
 int GetTurnDirection(){
+  digitalWrite(LeftMotorForwardPin, LOW);
+  digitalWrite(RightMotorForwardPin, LOW);
+  digitalWrite(LeftMotorBackwardPin, LOW);
+  digitalWrite(RightMotorBackwardPin, LOW);
   int DirectionToHead = 0;
   int LargestResult = 0;
   for(int ServoAngle = 0; ServoAngle<=180; ServoAngle+=45){
