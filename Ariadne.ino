@@ -22,6 +22,13 @@ const int ButtonPin = A5;
 // LED Pins
 const int ButtonLEDPin = 1;
 const int StartLEDPin = 2;
+// Line Following Settings
+// TODO : Reassign Time to turn
+const int TimeToTurn = 100;
+// Random Mode
+int RandomCycles = 0;
+
+enum LineFollowModes {RANDOM, LEFT, RIGHT, FORWARD, ERROR};
 
 void setup() {
   Serial.begin(9600);
@@ -53,28 +60,71 @@ void loop() {
   Serial.println((ModeButtonRead())? "High":"Low");
   if (ModeButtonRead() == HIGH) {
     // Wall Avoiding Mode
+    // Lmao get rekt yandere dev
     switch (GetTurnDirection())
     {
     case 0:
-      // turn to 0 Degrees
+      // TODO: turn to 0 Degrees
       break;
     case 45:
-      // turn to 45 Degrees
+      // TODO: turn to 45 Degrees
       break;
-    case :
-      // turn 135 to Degrees
+    case 135:
+      // TODO: turn 135 to Degrees
       break;
     case 180:
-      // turn 180 to Degrees
+      // TODO: turn 180 to Degrees
       break;
     default:
-      // probably 90 Degrees
+      // TODO: probably 90 Degrees
       break;
     }
 
   } else {
     // Line Following
+    switch (LineFollowingRead())
+    {
+    case FORWARD:
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, HIGH);
+      RandomCycles = 0;
+      break;
+    case LEFT:
+      // TODO : Change This Based On How The Sensor Operates
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, LOW);
+      delay(TimeToTurn);
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, HIGH);
+      RandomCycles = 0;
+      break;
+    case RIGHT:
+      // TODO : Change This Based On How The Sensor Operates
+      digitalWrite(RightMotorForwardPin, LOW);
+      digitalWrite(LeftMotorForwardPin, HIGH);
+      delay(TimeToTurn);
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, HIGH);
+      RandomCycles = 0;
+      break;
+    case RANDOM:
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, LOW);
+      // TODO : Fill out with appropriate delay
+      delay(100);
+      digitalWrite(RightMotorForwardPin, HIGH);
+      digitalWrite(LeftMotorForwardPin, HIGH);
 
+      delay(100+100*RandomCycles);
+      digitalWrite(RightMotorForwardPin, LOW);
+      digitalWrite(LeftMotorForwardPin, LOW);
+
+      RandomCycles++;
+      break;
+    default:
+      exit(1);
+      break;
+    }
   }
 }
 
@@ -134,7 +184,7 @@ int GetTurnDirection(){
     bool CurrentIsLargerThanPrevious = SensorResult > LargestResult;
     LargestResult = CurrentIsLargerThanPrevious ? SensorResult : LargestResult;
     DirectionToHead = CurrentIsLargerThanPrevious ? ServoAngle : DirectionToHead;
-    delay(250);
+    delay(350 );
   }
   Serial.print("Final DirectionToHead: ");
   Serial.print(DirectionToHead);
@@ -142,4 +192,15 @@ int GetTurnDirection(){
   Serial.println(LargestResult);
   
   return DirectionToHead;
+}
+
+LineFollowModes LineFollowingRead(){
+  // read input from sensors
+  bool leftSensor = digitalRead(LeftSensorPin) == 0;
+  bool centerSensor = digitalRead(CenterSensorPin) == 0;
+  bool rightSensor = digitalRead(RightSensorPin) == 0;
+
+  LineFollowModes Result = (leftSensor && rightSensor) || (!leftSensor && !centerSensor && !rightSensor) ? "Random": (leftSensor&&!rightSensor) ? "Left": (rightSensor&&!leftSensor) ? "Right" : (centerSensor)? "Forward" : "Error";
+
+  return Result;
 }
