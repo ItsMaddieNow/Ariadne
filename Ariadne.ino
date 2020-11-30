@@ -231,7 +231,7 @@ LineFollowModes LineFollowingRead(){
   bool centerSensor = digitalRead(CenterSensorPin) == 0;
   bool rightSensor = digitalRead(RightSensorPin) == 0;
 
-  LineFollowModes Result = (leftSensor && rightSensor) || (!leftSensor && !centerSensor && !rightSensor) ? "Random": (leftSensor&&!rightSensor) ? "Left": (rightSensor&&!leftSensor) ? "Right" : (centerSensor)? "Forward" : "Error";
+  LineFollowModes Result = (leftSensor && rightSensor) || (!leftSensor && !centerSensor && !rightSensor) ? RANDOM: (leftSensor&&!rightSensor) ? LEFT: (rightSensor&&!leftSensor) ? RANDOM : (centerSensor)? FORWARD : ERROR;
 
   return Result;
 }
